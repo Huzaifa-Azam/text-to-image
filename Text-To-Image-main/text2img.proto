@@ -1,0 +1,35 @@
+// Specify the protocol buffer version
+syntax = "proto3";
+
+// Define a gRPC service named Text2ImgService
+service Text2ImgService {
+  // RPC method GenerateImages takes a list of prompts and returns a list of image responses
+  rpc GenerateImages (PromptList) returns (ImageResponseList);
+}
+
+// Define a message representing a single text prompt
+message Prompt {
+  // The text prompt string
+  string prompt = 1;
+}
+
+// Define a message that contains a list of prompts (used as input to the RPC)
+message PromptList {
+  // A repeated field to hold multiple Prompt messages
+  repeated Prompt prompts = 1;
+}
+
+// Define a message for the response of one generated image
+message ImageResponse {
+  // Status code indicating success or specific error
+  string success_code = 1;
+
+  // Either the file path of the saved image or an error message
+  string image_path = 2;
+}
+
+// Define a message that contains a list of image responses (used as output from the RPC)
+message ImageResponseList {
+  // A repeated field to hold multiple ImageResponse messages
+  repeated ImageResponse images = 1;
+}
